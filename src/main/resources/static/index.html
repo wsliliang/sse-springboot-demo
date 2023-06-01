@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE demo</title>
+</head>
+<body>
+<button type="button" onclick="output()">输出文章</button>
+<div id="message"></div>
+<script>
+    function output() {
+        let source = new EventSource(
+            'http://localhost:8080/article');
+        let innerHTML = '';
+        source.onmessage = function (e) {
+            if (e.data == '[done]') {
+                source.close();
+            } else {
+                innerHTML += e.data;
+                document.getElementById("message").innerHTML = innerHTML;
+            }
+        };
+    }
+</script>
+</body>
+</html>
